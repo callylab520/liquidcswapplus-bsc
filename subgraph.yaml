@@ -1,0 +1,27 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: SwapPlusv1
+    network: bsc
+    source:
+      address: "0x4444457406b815253080bc38b084aa1a14faadbf"
+      abi: SwapPlusv1
+      startBlock: 30123322
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - OwnershipTransferred
+        - SwapPlus
+      abis:
+        - name: SwapPlusv1
+          file: ./abis/SwapPlusv1.json
+      eventHandlers:
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: SwapPlus(address,address,uint256,uint256,uint256)
+          handler: handleSwapPlus
+      file: ./src/swap-plus.ts
